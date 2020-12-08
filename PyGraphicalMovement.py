@@ -29,6 +29,6 @@ def Draw_tabs(window):
 win = tk.Tk()
 win.title("PyFinchMovement")
 win.geometry("205x300")
-# Draw_button(win)
+#  buttons = Draw_button(win)
 tabs = Draw_tabs(win)
 win.mainloop()
