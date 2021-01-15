@@ -1,34 +1,54 @@
+"""
+Программа для отрисовки матричного графического интерфейса
+для последующего движения Finch robot по заданным кнопкам
+"""
 import tkinter as tk
-from tkinter import ttk
+arr = []
 
 
-def Draw_button(window):
+def gen_perm_num(num):
+    if num == 5:
+        narr = [x for x in range(1, 10) if x != 5]
+    elif num in (1, 3, 7, 9):
+        x = num - 1 if not num % 3 else num + 1
+        narr.append(x)
+        y = num + 3 if num < 5 else num - 3
+        narr.append(y)
+
+    return narr
+
+
+def check_way(num: int, arr: list) -> list:
+    if len(arr) != 0:
+        if 0 < num < 10 and arr[0] != num:
+            carr = gen_perm_num(arr[len(arr) - 1])
+            if num in carr:
+                arr.append(num)
+            else:
+                return
+    else:
+        arr.append(num)
+
+
+def Draw_button() -> list:
+    # Функция создания кнопок в графическом интерфейсе
     x, y = 10, 0
-    arr = []
-    for i in range(3):
-        arr.append([])
-        for j in range(3):
-            arr[i].append(tk.Button(height="5", width="5"))
-            arr[i][j].grid(column=x, row=y)
-            x += 10
-        x = 10
-        y += 8
-    return arr
-
-
-def Draw_tabs(window):
-    tabs = tk.ttk.Notebook(window)
-    tab1 = tk.ttk.Frame(tabs)
-    tab2 = tk.ttk.Frame(tabs)
-    tabs.add(tab1, text='Matrix')
-    tabs.add(tab2, text='Arrows')
-    tabs.pack(expand=1, fill='both')
-    return tabs
+    barr = []
+    for i in range(9):
+        barr.append(tk.Button(heigh="5", width="5",
+                              command=lambda i=i+1, arr=arr: arr.append(i)))
+        print(i)
+        barr[i].grid(column=x, row=y)
+        y += 8 if x == 30 else 0
+        x = 10 if x == 30 else x + 10
+        print(x, y)
+    return barr
 
 
 win = tk.Tk()
 win.title("PyFinchMovement")
 win.geometry("205x300")
-#  buttons = Draw_button(win)
-tabs = Draw_tabs(win)
+# tabs = Draw_tabs(win)
+buttons = Draw_button()
 win.mainloop()
+print(arr)
