@@ -3,18 +3,128 @@
 для последующего движения Finch robot по заданным кнопкам
 """
 import tkinter as tk
+import time
 from tkinter import messagebox
-import finch as fi
+from finch import Finch
 
 arr = [5]
 
+def Move_right(finch: Finch) -> None:
+    "Функция, осуществяющая поворот вправо."
+    finch.wheels(0.5, -0.5)
+    time.sleep(0.6)
+    finch.wheels(1, 1)
+    time.sleep(0.5)
+    finch.wheels(-0.5, 0.5)
+    time.sleep(0.6)
+    finch.wheels(0, 0)
+    time.sleep(0.5)
 
-def Start_finch():
+
+def Move_left(finch: Finch) -> None:
+    "Функция, осуществляющая поворот влево"
+    finch.wheels(-0.5, 0.5)
+    time.sleep(0.6)
+    finch.wheels(1, 1)
+    time.sleep(0.5)
+    finch.wheels(0.5, -0.5)
+    time.sleep(0.6)
+    finch.wheels(0, 0)
+    time.sleep(0.5)
+
+def Move_forward(finch: Finch) -> None:
+    "Функция, движения вперёд."
+    finch.wheels(1, 1)
+    time.sleep(0.5)
+    finch.wheels(0, 0)
+    time.sleep(0.5)
+
+def Move_backward(finch: Finch) -> None:
+    "Функция движения назад."
+    finch.wheels(-0.8, 0.8)
+    time.sleep(0.6)
+    finch.wheels(1, 1)
+    time.sleep(0.5)
+    finch.wheels(0.8, -0.8)
+    time.sleep(0.6)
+    finch.wheels(0, 0)
+    time.sleep(0.5)
+
+
+def gen_prem_dest(From: int, to: int) -> str:
+    "Генерирования возможного движения."
+    dest = None
+    if From == 5:
+        if to == 2:
+            dest = 'back'
+        elif to == 4:
+            dest = 'right'
+        elif to == 6:
+            dest = 'left'
+        elif to == 8:
+            dest = 'forw'
+    elif From in (1, 7):
+        if From + 1 == to:
+            dest = 'left'
+        else:
+            dest = 'forw' if From == 1 else 'back'
+    elif From in (3, 9):
+        dest = 'right' if From - 1 == to else 'back'
+        if From - 1 == to:
+            dest = 'right'
+        else:
+            dest = 'forw' if From == 3 else 'back'
+    elif From in (2, 8):
+        if to == 5 and From == 2:
+            dest = 'forw'
+        elif to == 5 and From == 8:
+            dest = 'back'
+        elif From > to:
+            dest = 'right'
+        else:
+            dest = 'left'
+    elif From in (4, 6):
+        if to == 5 and From == 6:
+            dest = 'right'
+        elif to == 5 and From == 4:
+            dest = 'left'
+        elif From > to:
+            dest = 'back'
+        else:
+            dest = 'forw'
+    return dest
+
+
+def gen_move_arr(carr:list, farr: list):
+    "Сгенерировать массим движения."
+    if len(carr) <= 1:
+        return
+    else:
+        farr.append(gen_prem_dest(carr[0], carr[1]))
+        gen_move_arr(carr[1:], farr)
+    
+    
+def Start_finch() -> None:
+    "Коллбек, осуществляющий работу Finch Robot"
     try:
-        finch = fi.Finch()
+        finch = Finch()
+        darr = []
+        gen_move_arr(arr, darr)
+        for i in darr:
+            if i == 'right':
+                Move_right(finch)
+            elif i == 'left':
+                Move_left(finch)
+            elif i == 'back':
+                Move_backward(finch)
+            elif i == 'forw':
+                Move_forward(finch)
+
+            arr.clear()
     except Exception:
         messagebox.showerror("Ошибка", "Не полчилось подключиться к Finch robot")
 
+        
 def gen_perm_num(num: int) -> list:
     """
     Функция проверки может ли робот проехать в ячейку матрицы
@@ -43,6 +153,8 @@ def check_way(num: int, arr: list, text: tk.Label) -> None:
     Функция на основе информации полученной с gen_perm_num
     добавляет номер нажатой кнопки, или нет.
     """
+    if len(arr) == 0:
+        arr.append(5)
 
     if 0 < num < 10:
         carr = gen_perm_num(arr[len(arr) - 1])
@@ -55,7 +167,7 @@ def check_way(num: int, arr: list, text: tk.Label) -> None:
             text.config(text=mess)
         else:
             return
-    print(arr)  # Debugg
+    # print(arr)  # Debugg
 
 
 def Draw_elements(win: tk.Tk) -> None:
@@ -74,7 +186,7 @@ def Draw_elements(win: tk.Tk) -> None:
 
     tk.Button(win, width="23", text='Start', bg='deep sky blue',
               relief=tk.GROOVE,
-              command=Start_finch).place(x=0, y=240)  # Command = start_finch
+              command=Start_finch).place(x=0, y=240)  
 
 
 root = tk.Tk()
