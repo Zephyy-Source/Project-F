@@ -53,48 +53,13 @@ def Move_backward(finch: Finch) -> None:
 
 def gen_prem_dest(From: int, to: int) -> str:
     "Генерирования возможного движения."
-    dest = None
-    if From == 5:
-        if to == 2:
-            dest = 'back'
-        elif to == 4:
-            dest = 'right'
-        elif to == 6:
-            dest = 'left'
-        elif to == 8:
-            dest = 'forw'
-    elif From in (1, 7):
-        if From + 1 == to:
-            dest = 'left'
-        else:
-            dest = 'forw' if From == 1 else 'back'
-    elif From in (3, 9):
-        dest = 'right' if From - 1 == to else 'back'
-        if From - 1 == to:
-            dest = 'right'
-        else:
-            dest = 'forw' if From == 3 else 'back'
-    elif From in (2, 8):
-        if to == 5 and From == 2:
-            dest = 'forw'
-        elif to == 5 and From == 8:
-            dest = 'back'
-        elif From > to:
-            dest = 'right'
-        else:
-            dest = 'left'
-    elif From in (4, 6):
-        if to == 5 and From == 6:
-            dest = 'right'
-        elif to == 5 and From == 4:
-            dest = 'left'
-        elif From > to:
-            dest = 'back'
-        else:
-            dest = 'forw'
-    return dest
+    dest = {5: {2: 'back', 4: 'right', 6: 'left', 8: 'forw'}, # from - to
+           1: {2: 'left', 5: 'forw'}, 7: {8: 'left', 5: 'back'},
+           3: {2: 'right', 6: 'forw'}, 9: {8: 'right', 6: 'forw'},
+           2: {5: 'forw', 1: 'left', 3: 'right'}, 8: {5: 'forw', 7: 'left', 9: 'right'},
+           4: {1: 'back', 5: 'left', 7: 'forw'}, 6: {3: 'back', 5: 'right', 9: 'forw'}}
 
-
+    return dest[From][to]
 def gen_move_arr(carr:list, farr: list):
     "Сгенерировать массим движения."
     if len(carr) <= 1:
