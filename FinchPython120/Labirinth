@@ -1,15 +1,38 @@
-from finch import Finch
-from time import sleep
-
-
 # Алгоритм прохождения подходит для любых лабиринтов
 # Используется алгоритм Wall follower
 # https://en.wikipedia.org/wiki/Maze_solving_algorithm
 
-@staticmethod
-def move(rightW, leftW, timeOfSleep):
-    Finch.wheels(rightW, leftW)
-    sleep(timeOfSleep)
 
 
-move(1, 1, 1)
+from finch import Finch
+from time import sleep
+
+finch = Finch()
+
+class main:
+    @staticmethod
+    def move(leftw, rightw, timeofsleep):
+        finch.wheels(leftw, rightw)
+        sleep(timeofsleep)
+
+    @staticmethod
+    def forward(timeofsleep):
+        finch.wheels(1,1)
+        sleep(timeofsleep)
+
+    @staticmethod
+    def left(timeofsleep):
+        finch.wheels(1,0.5)
+        sleep(timeofsleep)
+
+    @staticmethod
+    def right(timeofsleep):
+        finch.wheels(0.5,1)
+        sleep(timeofsleep)
+
+    @staticmethod
+    def back(timeofsleep):
+        finch.wheels(-1,-1)
+        sleep(timeofsleep)
+
+main.move(0.3, 0.3, 1)
