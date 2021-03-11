@@ -1,10 +1,6 @@
 from finch import Finch
 
-
-
 finch = Finch()
-
-
 
 while True:
     try:
