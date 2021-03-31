@@ -1,23 +1,29 @@
 from time import sleep
 from finch import Finch
-import time
+
 fin = Finch()
 left, right = fin.obstacle()
-def check():
-    while not left and not right:
-        fin.wheels(0.5,0.5)
-        sleep(1)
-    if left and right:
-        fin.wheels(0.5, 0.5)
-        sleep(1)
-        fin.wheels(-1,-0.5)
-        sleep(0.5)
-    else:
-        fin.wheels(1,0.5)
-        sleep(0.5)
+x = 1
 while True:
-    fin.wheels(0.5,0.5)
-    sleep(1)
-    fin.wheels(1,0.3)
-    sleep(0.5)
-    check()
+    try:
+        while True:
+            fin.wheels(0.5, 0.5)
+            sleep(0.5)
+            if left and right:
+                fin.wheels(-1, 0.5)
+                sleep(0.9)
+            else:
+                fin.wheels(0.5, -1)
+                sleep(0.9)
+
+            while not left and not right:
+                fin.wheels(0.5, 0.5)
+                sleep(0.5)
+                break
+            if left or right:
+                fin.wheels(-0.5, -0.5)
+                sleep(0.5)
+                fin.wheels(-1, -0.3)
+                sleep(0.5)
+    except:
+        print('Error')
