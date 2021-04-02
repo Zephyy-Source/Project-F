@@ -1,7 +1,6 @@
 from finch import Finch
 import keyboard
 import time
-import sys
 
 finch = Finch()
 gear = 1

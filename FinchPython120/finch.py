@@ -9,12 +9,13 @@
 import time
 import finchconnection
 
+
 class Finch():
 
     def __init__(self):
         self.connection = finchconnection.ThreadedFinchConnection()
         self.connection.open()
-        
+
     def led(self, *args):
         """Control three LEDs (orbs).
        
@@ -41,8 +42,8 @@ class Finch():
         """
         millisec = int(duration * 1000)
         self.connection.send(b'B',
-                [(millisec & 0xff00) >> 8, millisec & 0x00ff,
-                 (frequency & 0xff00) >> 8, frequency & 0x00ff])
+                             [(millisec & 0xff00) >> 8, millisec & 0x00ff,
+                              (frequency & 0xff00) >> 8, frequency & 0x00ff])
 
     def buzzer_with_delay(self, duration, frequency):
         """ Outputs sound. Waits until a note is done beeping.
@@ -52,9 +53,9 @@ class Finch():
         """
         millisec = int(duration * 1000)
         self.connection.send(b'B',
-                [(millisec & 0xff00) >> 8, millisec & 0x00ff,
-                 (frequency & 0xff00) >> 8, frequency & 0x00ff])
-        time.sleep(duration*1.05)
+                             [(millisec & 0xff00) >> 8, millisec & 0x00ff,
+                              (frequency & 0xff00) >> 8, frequency & 0x00ff])
+        time.sleep(duration * 1.05)
 
     def light(self):
         """ Get light sensor readings. The values ranges from 0.0 to 1.0.
@@ -78,11 +79,11 @@ class Finch():
         if data is not None:
             left = data[0] != 0
             right = data[1] != 0
-            return left, right 
+            return left, right
 
     def temperature(self):
         """ Returns temperature in degrees Celcius. """
-        
+
         self.connection.send(b'T')
         data = self.connection.receive()
         if data is not None:
@@ -90,7 +91,7 @@ class Finch():
 
     def convert_raw_accel(self, a):
         """Converts the raw acceleration obtained from the hardware into G's"""
-        
+
         if a > 31:
             a -= 64
         return a * 1.6 / 32.0
@@ -107,7 +108,7 @@ class Finch():
             tap, shake are boolean values -- true if the correspondig event has
             happened.
         """
-        
+
         self.connection.send(b'A')
         data = self.connection.receive()
         if data is not None:
@@ -125,7 +126,7 @@ class Finch():
         1.0 (full throttle forward).
         use left = right = 0.0 to stop.
         """
-        
+
         dir_left = int(left < 0)
         dir_right = int(right < 0)
         left = min(abs(int(left * 255)), 255)

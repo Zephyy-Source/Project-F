@@ -6,10 +6,10 @@ from random import randint
 # Instantiate the Finch object and connect to Finch
 tweety = Finch()
 
-left, right = tweety.obstacle()
+lobs, robs = tweety.obstacle()
 
 # Do the following while no obstacles are detected by Finch
-while not left and not right:
+while not lobs and not robs:
     # Get the accelerations
     x, y, z, tap, shake = tweety.acceleration()
 
@@ -21,6 +21,6 @@ while not left and not right:
         tweety.led(randint(0,255), randint(0, 255), randint(0,255))
 
     # Get obstacles to use to exit loop
-    left, right = tweety.obstacle()
+    lobs, robs = tweety.obstacle()
     
 tweety.close()
