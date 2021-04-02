@@ -1,30 +1,36 @@
 from tkinter import *
 import keyboard
 import time
-import thread
+import sys
+from threading import Thread
 
-def print_tim
-    e(threadName, delay):
-    count = 0
-    while count < 5:
-        time.sleep(delay)
-        count += 1
-        print "%s: %s" % (threadName, time.ctime(time.time()))
-
- try:
-    thread.start_new_thread( print_time, ("Thread-1", 2,))
-    thread.start_new_thread( print_time, ("Thread-2", 4,))
- except:
-    print("Error")
-
-#####################################################
 
 def close():
-    window.destroy();
+    window.destroy()
 
+
+def eliminate():
+    sys.exit()
 
 def clicked():
-    exec(open("Manual_control.py").read());
+    close()
+    th1 = Thread(target=anotherWindow())
+    th1.start()
+    th2 = Thread(target=(exec(open("Manual_control.py").read())))
+    th2.start()
+
+def anotherWindow():
+    window2 = Tk()
+    window2.title("ULtraMegaGui v.0.1")
+    window2.geometry('720x360')
+    lbl = Label(window2, text="Hello", font=("Arial", 40))
+    lbl.grid(column=0, row=0)
+    btn = Button(window2, text="ТЕСТ", command=clicked)
+    btn.grid(column=1, row=0)
+    btn1 = Button(window2, text='Close programm', command=eliminate)
+    btn1.grid(column =2, row =1)
+    window2.mainloop()
+
 
 window = Tk()
 window.title("ULtraMegaGui v.0.1")
@@ -33,4 +39,6 @@ lbl = Label(window, text="Hello", font=("Arial", 40))
 lbl.grid(column=0, row=0)
 btn = Button(window, text="ТЕСТ", command=clicked)
 btn.grid(column=1, row=0)
+btn1 = Button(window, text='Close programm', command=eliminate)
+btn1.grid(column =2, row =1)
 window.mainloop()
