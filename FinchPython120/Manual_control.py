@@ -26,6 +26,10 @@ while True:
                 time.sleep(0.5)
                 print(gear)
             finch.wheels(0, 0)
+            if keyboard.is_pressed('r'):
+                gear = 0
+                time.sleep(0.5)
+                print(gear)
 
         # SECOND GEAR
         while gear == 2:
@@ -44,6 +48,10 @@ while True:
                 time.sleep(0.5)
                 print(gear)
             finch.wheels(0, 0)
+            if keyboard.is_pressed('r'):
+                gear = 0
+                time.sleep(0.5)
+                print(gear)
 
         # THIRD GEAR
         while gear == 3:
@@ -58,6 +66,10 @@ while True:
                 time.sleep(0.5)
                 print(gear)
             finch.wheels(0, 0)
+            if keyboard.is_pressed('r'):
+                gear = 0
+                time.sleep(0.5)
+                print(gear)
 
         # REVERSE GEAR
         while gear == 0:
