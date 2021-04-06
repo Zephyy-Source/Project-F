@@ -5,29 +5,39 @@ from threading import Thread
 
 fin = Finch()
 x, y, z, tap, shake = fin.acceleration()
+f = 1
+
 
 def accel():
     global x, y, z, tap, shake
     while True:
         x, y, z, tap, shake = fin.acceleration()
 
+
 def looping():
-    while  True:
-        t1.delete(1.0, END)
-        s1 = "X is %.2f , Y is %.2f , Z is %.2f " % (round(x, 2), round(y, 2), round(z, 2))
-        t1.insert(1.0, s1)
-        sleep(0.5)
+    global f
+    while True:
+        while f == 0:
+            t1.delete(1.0, END)
+            s1 = "X is %.2f , Y is %.2f , Z is %.2f " % (round(x, 2), round(y, 2), round(z, 2))
+            t1.insert(1.0, s1)
+            sleep(0.5)
+
 
 def start():
-    th4.start()
+    global f
+    f = 0
 
 
 def delete_text():
+    global f
+    f = 1
     t1.delete(1.0, END)
 
 
 th4 = Thread(target=looping)
 th3 = Thread(target=accel)
+th4.start()
 th3.start()
 
 root = Tk()
