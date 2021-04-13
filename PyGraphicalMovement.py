@@ -6,8 +6,8 @@ import tkinter as tk
 import time
 from tkinter import messagebox
 from finch import Finch
-
 arr = [5]
+
 
 def Move_right(finch: Finch) -> None:
     "Функция, осуществяющая поворот вправо."
@@ -32,12 +32,14 @@ def Move_left(finch: Finch) -> None:
     finch.wheels(0, 0)
     time.sleep(0.5)
 
+
 def Move_forward(finch: Finch) -> None:
     "Функция, движения вперёд."
     finch.wheels(1, 1)
     time.sleep(0.5)
     finch.wheels(0, 0)
     time.sleep(0.5)
+
 
 def Move_backward(finch: Finch) -> None:
     "Функция движения назад."
@@ -53,22 +55,26 @@ def Move_backward(finch: Finch) -> None:
 
 def gen_prem_dest(From: int, to: int) -> str:
     "Генерирования возможного движения."
-    dest = {5: {2: 'back', 4: 'right', 6: 'left', 8: 'forw'}, # from - to
-           1: {2: 'left', 5: 'forw'}, 7: {8: 'left', 5: 'back'},
-           3: {2: 'right', 6: 'forw'}, 9: {8: 'right', 6: 'forw'},
-           2: {5: 'forw', 1: 'left', 3: 'right'}, 8: {5: 'forw', 7: 'left', 9: 'right'},
-           4: {1: 'back', 5: 'left', 7: 'forw'}, 6: {3: 'back', 5: 'right', 9: 'forw'}}
+    dest = {5: {2: 'back', 4: 'right', 6: 'left', 8: 'forw'},  # from - to
+            1: {2: 'left', 5: 'forw'}, 7: {8: 'left', 5: 'back'},
+            3: {2: 'right', 6: 'forw'}, 9: {8: 'right', 6: 'forw'},
+            2: {5: 'forw', 1: 'left', 3: 'right'},
+            8: {5: 'forw', 7: 'left', 9: 'right'},
+            4: {1: 'back', 5: 'left', 7: 'forw'},
+            6: {3: 'back', 5: 'right', 9: 'forw'}}
 
     return dest[From][to]
-def gen_move_arr(carr:list, farr: list):
+
+
+def gen_move_arr(carr: list, farr: list):
     "Сгенерировать массим движения."
     if len(carr) <= 1:
         return
     else:
         farr.append(gen_prem_dest(carr[0], carr[1]))
         gen_move_arr(carr[1:], farr)
-    
-    
+
+
 def Start_finch() -> None:
     "Коллбек, осуществляющий работу Finch Robot"
     try:
@@ -87,9 +93,10 @@ def Start_finch() -> None:
 
             arr.clear()
     except Exception:
-        messagebox.showerror("Ошибка", "Не полчилось подключиться к Finch robot")
+        messagebox.showerror(
+            "Ошибка", "Не полчилось подключиться к Finch robot")
 
-        
+
 def gen_perm_num(num: int) -> list:
     """
     Функция проверки может ли робот проехать в ячейку матрицы
@@ -137,7 +144,8 @@ def check_way(num: int, arr: list, text: tk.Label) -> None:
 
 def Draw_elements(win: tk.Tk) -> None:
     start_msg = "Вы находитесь в ячейке [5]\nВозможный путь [2 4 6 8]"
-    txt = tk.Label(win, text=start_msg, width="27", relief=tk.GROOVE, bg='white')
+    txt = tk.Label(win, text=start_msg, width="27",
+                   relief=tk.GROOVE, bg='white')
     txt.place(relx=0.0, rely=0.9)
 
     x, y = 1, 0
@@ -151,7 +159,7 @@ def Draw_elements(win: tk.Tk) -> None:
 
     tk.Button(win, width="23", text='Start', bg='deep sky blue',
               relief=tk.GROOVE,
-              command=Start_finch).place(x=0, y=240)  
+              command=Start_finch).place(x=0, y=240)
 
 
 root = tk.Tk()
