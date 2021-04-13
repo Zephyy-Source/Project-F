@@ -1,0 +1,1 @@
+/home/zephyy/Projects/Project-F/FinchPython120/Manual_control.py

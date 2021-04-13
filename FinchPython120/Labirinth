@@ -1,0 +1,39 @@
+# Алгоритм прохождения подходит для любых лабиринтов
+# Используется алгоритм Wall follower
+# https://en.wikipedia.org/wiki/Maze_solving_algorithm
+
+
+from finch import Finch
+# import logging
+# import threading
+import time
+import keyboard
+
+finch = Finch()
+
+
+class test:
+    @staticmethod
+    def move(leftw, rightw, timeofsleep):
+        finch.wheels(leftw, rightw)
+        time.sleep(timeofsleep)
+
+    @staticmethod
+    def forward(timeofsleep):
+        finch.wheels(1, 1)
+        time.sleep(timeofsleep)
+
+    @staticmethod
+    def left(timeofsleep):
+        finch.wheels(1, 0.5)
+        time.sleep(timeofsleep)
+
+    @staticmethod
+    def right(timeofsleep):
+        finch.wheels(0.5, 1)
+        time.sleep(timeofsleep)
+
+    @staticmethod
+    def back(timeofsleep):
+        finch.wheels(-1, -1)
+        time.sleep(timeofsleep)
