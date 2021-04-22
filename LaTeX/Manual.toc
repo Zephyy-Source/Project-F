@@ -1,0 +1,11 @@
+\babel@toc {russian}{}
+\contentsline {chapter}{\numberline {1}Python}{3}{}%
+\contentsline {section}{\numberline {1.1}Основы языка}{3}{}%
+\contentsline {section}{\numberline {1.2}Библиотека графического интерфейса tkinter}{3}{}%
+\contentsline {chapter}{\numberline {2}Документация Finch Robot}{4}{}%
+\contentsline {chapter}{\numberline {3}Примеры программ}{5}{}%
+\contentsline {section}{\numberline {3.1}Следование за световым пятном}{5}{}%
+\contentsline {section}{\numberline {3.2}Обход лабиринта}{5}{}%
+\contentsline {section}{\numberline {3.3}Движение с помощью клавиатуры}{5}{}%
+\contentsline {section}{\numberline {3.4}Работа с акселерометром}{5}{}%
+\contentsline {section}{\numberline {3.5}Движение по матрице}{5}{}%
